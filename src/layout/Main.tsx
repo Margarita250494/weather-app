@@ -1,12 +1,14 @@
-import Metrics from './Metrics.tsx'
+import { useLocationCoords } from '../utils/hooks/useLocationCoords.ts'
 import SearchField from './SearchField.tsx'
+import WeatherPanel from './WeatherPanel.tsx'
 
 const Main = () => {
+  const { setCoords } = useLocationCoords()
   return (
     <main className="w-full flex flex-col gap-8 md:gap-16">
       <h1 className="heading text-center">How's the sky looking today?</h1>
-      <SearchField />
-      <Metrics />
+      <SearchField onSelect={setCoords} />
+      <WeatherPanel />
     </main>
   )
 }

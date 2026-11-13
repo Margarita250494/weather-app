@@ -21,3 +21,25 @@ export interface LocationResponse {
   city: string
   locality?: string
 }
+
+export interface MetricData {
+  title: string
+  value: number
+  unit: string
+}
+
+export interface Coords {
+  lat: number
+  lon: number
+}
+
+export interface GeoResult {
+  name: string
+  latitude: number
+  longitude: number
+  country: string
+}
+
+export interface GeoResponse {
+  results?: GeoResult[]
+}
