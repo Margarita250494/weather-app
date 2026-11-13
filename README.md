@@ -1,75 +1,116 @@
-# React + TypeScript + Vite
+# Weather App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive weather application built as part of a [Frontend Mentor](https://www.frontendmentor.io/) challenge. The app allows users to search for weather information by location and view current weather conditions and forecasts.
 
-Currently, two official plugins are available:
+The project was developed using React, TypeScript, CSS, and Tailwind CSS, with external APIs for weather data and geolocation.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Live Demo
 
-## React Compiler
+Soon
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Challenge
 
-## Expanding the ESLint configuration
+This project is based on the [Frontend Mentor – Weather App Challenge](https://www.frontendmentor.io/challenges/weather-app-K1FhddVm49).
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Built With
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **React** – UI development
+- **TypeScript** – Static typing
+- **CSS** – Custom styling
+- **Tailwind CSS** – Utility-first CSS framework
+- **Vite** – Development server and build tool
+- **Open-Meteo API** – Weather data and forecasts
+- **BigDataCloud Reverse Geocoding API** – Location detection and geolocation information
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## APIs
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+This application uses the following APIs:
 
+### Weather Data – Open-Meteo
+
+[Open-Meteo](https://open-meteo.com/)
+
+Provides weather information, including current weather conditions and forecasts.
+
+### Location Detection – BigDataCloud
+
+[BigDataCloud Reverse Geocoding API](https://api.bigdatacloud.net/data/reverse-geocode-client)
+
+Used to retrieve location information based on the user's geographical coordinates.
+
+## Features
+
+- Search for weather information by location.
+- Display current weather conditions.
+- Retrieve location information using geolocation.
+- Get weather data from Open-Meteo.
+- Responsive layout for different screen sizes.
+- Styled with Tailwind CSS and custom CSS.
+
+## Getting Started
+
+Follow these instructions to run the project locally.
+
+### Prerequisites
+
+Make sure you have installed:
+
+- [Node.js](https://nodejs.org/)
+- npm
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/Margarita250494/weather-app.git
+   ```
+
+2. Navigate to the project directory:
+
+   ```bash
+   cd weather-app
+   ```
+
+3. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+4. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+5. Open the local URL provided by Vite in your browser.
+
+## Project Structure
+
+```text
+weather-app/
+├── public/
+├── src/
+│   ├── assets/
+│   ├── components/
+│   ├── ...
+│   ├── App.tsx
+│   ├── main.tsx
+│   └── ...
+├── index.html
+├── package.json
+├── tsconfig.json
+├── vite.config.ts
+└── README.md
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+## Acknowledgements
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- [Frontend Mentor](https://www.frontendmentor.io/) for the challenge and design inspiration.
+- [Open-Meteo](https://open-meteo.com/) for providing free weather data.
+- [BigDataCloud](https://www.bigdatacloud.com/) for reverse geocoding services.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
 
-```
+**Created by [Margarita Boiko](https://github.com/Margarita250494)**
