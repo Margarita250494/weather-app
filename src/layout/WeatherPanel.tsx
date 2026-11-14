@@ -1,18 +1,27 @@
 import clsx from 'clsx'
 import HeroCard from '../components/cards/HeroCard.tsx'
+import HourlyPanel from '../components/cards/HourlyPanel.tsx'
 import MetricCard from '../components/cards/MetricCard.tsx'
 import { getMetricData } from '../utils/data.tsx'
-import { useLocationCoords } from '../utils/hooks/useLocationCoords.ts'
+import { getHourlyData } from '../utils/helpers.ts'
 import { useWeatherData } from '../utils/hooks/useWeatherData.ts'
+import type { Coords, LocationResponse } from '../utils/types.ts'
 import { LoadingDots } from './Loading.tsx'
 
-const WeatherPanel = () => {
-  const { location, coords } = useLocationCoords()
+const WeatherPanel = ({
+  coords,
+  location,
+}: {
+  coords: Coords | null
+  location: LocationResponse | null
+}) => {
   const { weather, loading, error } = useWeatherData(coords)
 
   if (error) return <p>{error}</p>
   if (!weather) return null
   const metric = weather ? getMetricData(weather) : []
+  console.log(getHourlyData(weather))
+
   return (
     <section className="w-full flex flex-col lg:flex-row gap-8">
       <div className="w-full lg:w-[70%] flex flex-col gap-8">
@@ -35,9 +44,7 @@ const WeatherPanel = () => {
         </div>
       </div>
 
-      <div className=" hourly-panel flex flex-col gap-4 w-full lg:w-[30%]">
-        <div className="hourly-row">1</div>
-      </div>
+      <HourlyPanel weather={weather} />
     </section>
   )
 }

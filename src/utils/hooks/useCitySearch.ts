@@ -1,46 +1,52 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { getGeocodingUrl } from '../helpers.ts'
 import type { GeoResponse, GeoResult } from '../types.ts'
 
-export const useCitySearch = () => {
-  const [results, setResults] = useState<GeoResult[]>([])
-  const [searching, setSearching] = useState(false)
-  const [searchError, setSearchError] = useState<string | null>(null)
+export const MIN_QUERY_LENGTH = 3
 
-  const search = async (query: string) => {
+interface SearchState {
+  query: string // для какого текста получен ответ
+  results: GeoResult[]
+  failed: boolean
+}
+
+export const useCitySearch = (query: string) => {
+  const [state, setState] = useState<SearchState | null>(null)
+
+  useEffect(() => {
     const name = query.trim()
+    if (name.length < MIN_QUERY_LENGTH) return
 
-    if (name.length < 2) {
-      clear()
-      return
-    }
+    let cancelled = false
 
-    setSearching(true)
-    setSearchError(null)
-    setResults([])
-
-    try {
-      const response = await fetch(getGeocodingUrl(name))
-
-      if (!response.ok) {
-        throw new Error('Something went wrong')
+    const timer = setTimeout(async () => {
+      try {
+        const response = await fetch(getGeocodingUrl(name))
+        if (!response.ok) {
+          throw new Error('Something went wrong')
+        }
+        const data: GeoResponse = await response.json()
+        if (!cancelled) setState({ query: name, results: data.results ?? [], failed: false })
+      } catch {
+        if (!cancelled) setState({ query: name, results: [], failed: true })
       }
+    }, 400)
 
-      const data: GeoResponse = await response.json()
-
-      setResults(data.results ?? [])
-    } catch {
-      setSearchError('Search failed')
-    } finally {
-      setSearching(false)
+    return () => {
+      cancelled = true
+      clearTimeout(timer)
     }
-  }
+  }, [query])
 
-  const clear = () => {
-    setResults([])
-    setSearching(false)
-    setSearchError(null)
-  }
+  // всё ниже считается при каждом рендере
+  const name = query.trim()
+  const isActive = name.length >= MIN_QUERY_LENGTH
+  const current = isActive && state && state.query === name ? state : null
 
-  return { results, searching, searchError, search, clear }
+  return {
+    results: current?.results ?? [],
+    searching: isActive && current === null,
+    searchError: current?.failed ? 'Search failed' : null,
+    notFound: current !== null && !current.failed && current.results.length === 0,
+  }
 }

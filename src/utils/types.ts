@@ -14,6 +14,10 @@ export interface WeatherResponse {
     wind_speed_10m: number
     precipitation: number
   }
+  hourly: {
+    time: string[]
+    temperature_2m: number[]
+  }
 }
 
 export interface LocationResponse {
@@ -42,4 +46,9 @@ export interface GeoResult {
 
 export interface GeoResponse {
   results?: GeoResult[]
+}
+
+export interface HourlyItem {
+  time: string
+  temperature: number
 }
