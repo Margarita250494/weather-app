@@ -1,3 +1,5 @@
+import { UNITS_KEY } from './helpers.ts'
+
 export interface WeatherResponse {
   current_units: {
     temperature_2m: string
@@ -51,4 +53,16 @@ export interface GeoResponse {
 export interface HourlyItem {
   time: string
   temperature: number
+}
+
+export type Units = 'metric' | 'imperial'
+
+export type TemperatureUnit = UNITS_KEY.TEMPERATURE_M | UNITS_KEY.TEMPERATURE_I
+export type WindUnit = UNITS_KEY.WIND_M | UNITS_KEY.WIND_I
+export type PrecipitationUnit = UNITS_KEY.PRECIPITATION_M | UNITS_KEY.PRECIPITATION_I
+
+export type UnitSettings = {
+  temperatureUnit: TemperatureUnit
+  windUnit: WindUnit
+  precipitationUnit: PrecipitationUnit
 }

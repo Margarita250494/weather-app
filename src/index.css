@@ -236,7 +236,7 @@ h6 {
 /* Metric cards */
 
 .metric-card {
-  padding: 20px;
+
   border: 1px solid var(--border);
   border-radius: var(--radius-card);
   background: var(--surface);
@@ -344,11 +344,11 @@ h6 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 40px;
+
   padding: 8px;
   border-radius: var(--radius-button);
   color: var(--text-primary);
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .dropdown-item:hover,

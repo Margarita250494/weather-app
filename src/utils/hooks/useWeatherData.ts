@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react'
 import { getWeatherUrl } from '../helpers.ts'
-import type { Coords, WeatherResponse } from '../types.ts'
+import type { Coords, UnitSettings, WeatherResponse } from '../types.ts'
 
-export const useWeatherData = (coords: Coords | null) => {
+export const useWeatherData = (coords: Coords | null, units: UnitSettings) => {
   const [weather, setWeather] = useState<WeatherResponse | null>(null)
   const [loadedKey, setLoadedKey] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
-
+  const weatherKey = coords
+    ? `${coords.lat},${coords.lon},${units.temperatureUnit},${units.windUnit},${units.precipitationUnit}`
+    : null
   useEffect(() => {
     if (!coords) return
     console.log('3. эффект погоды, coords =', coords)
@@ -15,7 +17,7 @@ export const useWeatherData = (coords: Coords | null) => {
 
     async function loadWeather() {
       try {
-        const response = await fetch(getWeatherUrl(lat, lon))
+        const response = await fetch(getWeatherUrl(lat, lon, units))
         if (!response.ok) {
           throw new Error('Failed to fetch weather')
         }
@@ -26,7 +28,7 @@ export const useWeatherData = (coords: Coords | null) => {
       } catch {
         if (!cancelled) setError('something wrong')
       } finally {
-        if (!cancelled) setLoadedKey(`${lat},${lon}`)
+        if (!cancelled) setLoadedKey(weatherKey)
       }
     }
     void loadWeather()
@@ -34,9 +36,9 @@ export const useWeatherData = (coords: Coords | null) => {
     return () => {
       cancelled = true
     }
-  }, [coords])
+  }, [coords, units, weatherKey])
 
-  const loading = !coords || loadedKey !== `${coords.lat},${coords.lon}`
+  const loading = !weatherKey || loadedKey !== weatherKey
 
   return { weather, loading, error }
 }

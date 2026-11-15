@@ -1,11 +1,33 @@
 //default Location
 
-import type { HourlyItem, WeatherResponse } from './types.ts'
+import type { HourlyItem, Units, UnitSettings, WeatherResponse } from './types.ts'
 
 export const BERLIN = { lat: 52.52, lon: 13.41 }
 
-export const getWeatherUrl = (lat: number, lon: number): string => {
-  return `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,precipitation&hourly=temperature_2m&timezone=auto&forecast_days=2`
+export enum UNITS_KEY {
+  TEMPERATURE_M = 'celsius',
+  TEMPERATURE_I = 'fahrenheit',
+  WIND_M = 'kmh',
+  WIND_I = 'mph',
+  PRECIPITATION_M = 'mm',
+  PRECIPITATION_I = 'inch',
+}
+
+export const UNIT_SYSTEMS: Record<Units, UnitSettings> = {
+  metric: {
+    temperatureUnit: UNITS_KEY.TEMPERATURE_M,
+    windUnit: UNITS_KEY.WIND_M,
+    precipitationUnit: UNITS_KEY.PRECIPITATION_M,
+  },
+  imperial: {
+    temperatureUnit: UNITS_KEY.TEMPERATURE_I,
+    windUnit: UNITS_KEY.WIND_I,
+    precipitationUnit: UNITS_KEY.PRECIPITATION_I,
+  },
+}
+
+export const getWeatherUrl = (lat: number, lon: number, units: UnitSettings): string => {
+  return `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,precipitation&hourly=temperature_2m&timezone=auto&forecast_days=7&precipitation_unit=${units.precipitationUnit}&temperature_unit=${units.temperatureUnit}&wind_speed_unit=${units.windUnit}`
 }
 
 export const getLocationUrl = (lat: number, lon: number) => {
@@ -40,3 +62,7 @@ export const getDayName = (date: string) =>
   new Date(date).toLocaleDateString('de-DE', { weekday: 'long', timeZone: 'UTC' })
 
 export const getHourLabel = (time: string) => time.slice(11, 16)
+
+export const isCurrentHour = (itemTime: string, currentTime: string) => {
+  return itemTime.slice(0, 13) === currentTime.slice(0, 13)
+}

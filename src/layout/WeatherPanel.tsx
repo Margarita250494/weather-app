@@ -5,17 +5,19 @@ import MetricCard from '../components/cards/MetricCard.tsx'
 import { getMetricData } from '../utils/data.tsx'
 import { getHourlyData } from '../utils/helpers.ts'
 import { useWeatherData } from '../utils/hooks/useWeatherData.ts'
-import type { Coords, LocationResponse } from '../utils/types.ts'
+import type { Coords, LocationResponse, UnitSettings } from '../utils/types.ts'
 import { LoadingDots } from './Loading.tsx'
 
 const WeatherPanel = ({
   coords,
   location,
+  units,
 }: {
   coords: Coords | null
   location: LocationResponse | null
+  units: UnitSettings
 }) => {
-  const { weather, loading, error } = useWeatherData(coords)
+  const { weather, loading, error } = useWeatherData(coords, units)
 
   if (error) return <p>{error}</p>
   if (!weather) return null
