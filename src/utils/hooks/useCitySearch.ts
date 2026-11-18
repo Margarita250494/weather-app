@@ -5,7 +5,7 @@ import type { GeoResponse, GeoResult } from '../types.ts'
 export const MIN_QUERY_LENGTH = 3
 
 interface SearchState {
-  query: string // для какого текста получен ответ
+  query: string
   results: GeoResult[]
   failed: boolean
 }
@@ -38,7 +38,6 @@ export const useCitySearch = (query: string) => {
     }
   }, [query])
 
-  // всё ниже считается при каждом рендере
   const name = query.trim()
   const isActive = name.length >= MIN_QUERY_LENGTH
   const current = isActive && state && state.query === name ? state : null

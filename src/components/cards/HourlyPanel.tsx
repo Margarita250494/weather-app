@@ -1,8 +1,7 @@
-import clsx from 'clsx'
 import { getDayName, getHourLabel, isCurrentHour } from '../../utils/helpers.ts'
 import { useHourlyWeather } from '../../utils/hooks/useHourlyWeather.ts'
 import type { WeatherResponse } from '../../utils/types.ts'
-import { CaretDown } from '../Icons.ts'
+import Button from '../Button.tsx'
 
 const HourlyPanel = ({ weather }: { weather: WeatherResponse }) => {
   const {
@@ -23,14 +22,12 @@ const HourlyPanel = ({ weather }: { weather: WeatherResponse }) => {
       <div className="w-full flex justify-between items-center gap-2">
         <h6 className="section-title ">Hourly Forecast</h6>
         <div ref={menuRef} className="relative">
-          <button
-            className="bg-neutral-600 rounded-sm py-2 px-4 flex gap-3 items-center"
-            onClick={toggleDayMenu}
-            aria-expanded={openDay}
-          >
-            <span>{getDayName(activeDay)}</span>
-            <CaretDown className={clsx('duration-500', openDay ? 'rotate-180' : 'rotate-0')} />
-          </button>
+          <Button
+            handleMenuOpen={toggleDayMenu}
+            ariaExpanded={openDay}
+            className="bg-neutral-600"
+            buttonLabel={getDayName(activeDay)}
+          />
           {openDay && (
             <div className="dropdown absolute left-0 top-full z-10 mt-2 w-full">
               <ul className="">

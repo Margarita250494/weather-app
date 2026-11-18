@@ -332,7 +332,6 @@ h6 {
 /* Dropdown */
 
 .dropdown {
-
   padding: 6px 8px;
   border: 1px solid var(--border);
   border-radius: var(--radius-card);
@@ -437,6 +436,76 @@ h6 {
     opacity: 1;
   }
 }
+
+
+.units-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 56px;
+  height: 30px;
+  padding: 3px;
+  border-radius: 999px;
+  cursor: pointer;
+
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
+  transition: background 0.3s ease,
+  border-color 0.3s ease,
+  box-shadow 0.3s ease;
+}
+
+/* Toggle thumb */
+.units-toggle::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+
+  background: var(--color-neutral-0);
+  box-shadow: 0 2px 6px rgba(2, 1, 44, 0.2);
+
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Active state */
+#units-toggle:checked + .units-toggle {
+  background: linear-gradient(
+    135deg,
+    var(--color-blue-500) 0%,
+    var(--color-blue-700) 100%
+  );
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Move thumb */
+#units-toggle:checked + .units-toggle::before {
+  transform: translateX(26px);
+}
+
+/* Hover */
+.units-toggle:hover {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08);
+}
+
+/* Keyboard accessibility */
+#units-toggle:focus-visible + .units-toggle {
+  outline: 2px solid var(--color-orange-500);
+  outline-offset: 3px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .units-toggle,
+  .units-toggle::before {
+    transition: none;
+  }
+}
+
+
 
 /* ========================================
    RESPONSIVE

@@ -11,7 +11,6 @@ export const useWeatherData = (coords: Coords | null, units: UnitSettings) => {
     : null
   useEffect(() => {
     if (!coords) return
-    console.log('3. эффект погоды, coords =', coords)
     const { lat, lon } = coords
     let cancelled = false
 

@@ -1,3 +1,5 @@
+import * as React from 'react'
+import { type ReactNode } from 'react'
 import { UNITS_KEY } from './helpers.ts'
 
 export interface WeatherResponse {
@@ -65,4 +67,37 @@ export type UnitSettings = {
   temperatureUnit: TemperatureUnit
   windUnit: WindUnit
   precipitationUnit: PrecipitationUnit
+}
+
+export type TButton = {
+  handleMenuOpen: () => void
+  ariaExpanded: boolean
+  icon?: ReactNode
+  buttonLabel?: ReactNode
+  className?: string
+}
+
+export type TSwitcherInput = {
+  switcherLabel: string
+  isImperial: boolean
+  handleChange: (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => void
+}
+
+type Option<T> = {
+  label: string
+  value: T
+}
+
+export type UnitSelectGroupProps<T> = {
+  title: string
+  options: Option<T>[]
+  selectedValue: T
+  onSelect: (value: T) => void
+  className?: string
+}
+
+export type TWeatherPanel = {
+  coords: Coords | null
+  location: LocationResponse | null
+  units: UnitSettings
 }

@@ -66,3 +66,21 @@ export const getHourLabel = (time: string) => time.slice(11, 16)
 export const isCurrentHour = (itemTime: string, currentTime: string) => {
   return itemTime.slice(0, 13) === currentTime.slice(0, 13)
 }
+
+//switcher weather
+export const getWeatherUnits = (units: UnitSettings) => {
+  const isCelsius = units.temperatureUnit === UNITS_KEY.TEMPERATURE_M
+  const isFahrenheit = units.temperatureUnit === UNITS_KEY.TEMPERATURE_I
+  const isKMH = units.windUnit === UNITS_KEY.WIND_M
+  const isMPH = units.windUnit === UNITS_KEY.WIND_I
+  const isMM = units.precipitationUnit === UNITS_KEY.PRECIPITATION_M
+  const isIN = units.precipitationUnit === UNITS_KEY.PRECIPITATION_I
+  const isImperial =
+    units.temperatureUnit === UNITS_KEY.TEMPERATURE_I &&
+    units.windUnit === UNITS_KEY.WIND_I &&
+    units.precipitationUnit === UNITS_KEY.PRECIPITATION_I
+
+  const switcherLabel = isImperial ? 'Metric' : 'Imperial'
+
+  return { switcherLabel, isCelsius, isFahrenheit, isKMH, isMPH, isMM, isIN, isImperial }
+}
