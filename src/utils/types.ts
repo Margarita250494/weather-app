@@ -17,10 +17,20 @@ export interface WeatherResponse {
     relative_humidity_2m: number
     wind_speed_10m: number
     precipitation: number
+    weather_code: number
+    is_day: number
   }
   hourly: {
     time: string[]
     temperature_2m: number[]
+    weather_code: number[]
+    is_day: number[]
+  }
+  daily: {
+    time: string[]
+    weather_code: number[]
+    temperature_2m_max: number[]
+    temperature_2m_min: number[]
   }
 }
 
@@ -55,6 +65,15 @@ export interface GeoResponse {
 export interface HourlyItem {
   time: string
   temperature: number
+  weather_code: number
+  is_day: number
+}
+
+export interface DailyItem {
+  time: string
+  temperature_2m_max: number
+  temperature_2m_min: number
+  weather_code: number
 }
 
 export type Units = 'metric' | 'imperial'
@@ -100,4 +119,30 @@ export type TWeatherPanel = {
   coords: Coords | null
   location: LocationResponse | null
   units: UnitSettings
+}
+
+export type TUnitGroup = {
+  title: string
+  unitKey: keyof UnitSettings
+  variants: Option<UnitSettings[keyof UnitSettings]>[]
+}
+
+export type TWeatherIcon = {
+  label: string
+  codes: number[]
+  day: string
+  night: string
+}
+
+export type TWeatherIconItem = {
+  icon: string
+  label: string
+}
+
+export type TDailyCard = {
+  dayName: string
+  icon: TWeatherIconItem
+  tMin: number
+  tMax: number
+  unit: string
 }

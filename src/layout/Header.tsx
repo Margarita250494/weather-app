@@ -1,9 +1,11 @@
+import clsx from 'clsx'
 import * as React from 'react'
 import Logo from '../assets/logo.svg'
 import Button from '../components/Button.tsx'
 import { Settings } from '../components/Icons.ts'
 import SwitcherInput from '../components/SwitcherInput.tsx'
 import UnitSelectGroup from '../components/UnitSelectGroup.tsx'
+import { UNIT_GROUPS } from '../utils/data.tsx'
 import { getWeatherUnits, UNITS_KEY } from '../utils/helpers.ts'
 import { useOpenHeaderMenu } from '../utils/hooks/useOpenHeaderMenu.ts'
 import type { UnitSettings } from '../utils/types.ts'
@@ -48,10 +50,31 @@ const Header = ({
               isImperial={isImperial}
               handleChange={handleChange}
             />
-            <UnitSelectGroup
+            {UNIT_GROUPS.map(({ title, unitKey, variants }, index) => {
+              const isLast = index === UNIT_GROUPS.length - 1
+              return (
+                <UnitSelectGroup
+                  key={unitKey}
+                  title={title}
+                  selectedValue={units[unitKey]}
+                  onSelect={(value) => onSelect({ ...units, [unitKey]: value })}
+                  options={variants}
+                  className={clsx(isLast && 'pb-1.5')}
+                />
+              )
+            })}
+          </div>
+        )}
+      </div>
+    </header>
+  )
+}
+
+export default Header
+/*<UnitSelectGroup<TemperatureUnit>
               title="Temperature"
               selectedValue={units.temperatureUnit}
-              onSelect={() => onSelect({ ...units, temperatureUnit: UNITS_KEY.TEMPERATURE_M })}
+              onSelect={(value) => onSelect({ ...units, temperatureUnit: value })}
               options={[
                 {
                   label: 'Celsius (°C)',
@@ -64,10 +87,10 @@ const Header = ({
               ]}
             />
 
-            <UnitSelectGroup
+            <UnitSelectGroup<WindUnit>
               title="Wind speed"
               selectedValue={units.windUnit}
-              onSelect={() => onSelect({ ...units, windUnit: UNITS_KEY.WIND_M })}
+              onSelect={(value) => onSelect({ ...units, windUnit: value })}
               options={[
                 {
                   label: 'Kilometers per hour (kmh)',
@@ -80,10 +103,10 @@ const Header = ({
               ]}
             />
 
-            <UnitSelectGroup
+            <UnitSelectGroup<PrecipitationUnit>
               title="Precipitation"
               selectedValue={units.precipitationUnit}
-              onSelect={() => onSelect({ ...units, precipitationUnit: UNITS_KEY.PRECIPITATION_M })}
+              onSelect={(value) => onSelect({ ...units, precipitationUnit: value })}
               options={[
                 {
                   label: 'Millimeters (mm)',
@@ -95,12 +118,4 @@ const Header = ({
                 },
               ]}
               className="pb-1.5"
-            />
-          </div>
-        )}
-      </div>
-    </header>
-  )
-}
-
-export default Header
+            />*/

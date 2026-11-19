@@ -5,6 +5,7 @@ import MetricCard from '../components/cards/MetricCard.tsx'
 import { getMetricData } from '../utils/data.tsx'
 import { useWeatherData } from '../utils/hooks/useWeatherData.ts'
 import type { TWeatherPanel } from '../utils/types.ts'
+import DailyPanel from './DailyPanel.tsx'
 import { LoadingDots } from './Loading.tsx'
 
 const WeatherPanel = ({ coords, location, units }: TWeatherPanel) => {
@@ -33,6 +34,7 @@ const WeatherPanel = ({ coords, location, units }: TWeatherPanel) => {
             <MetricCard key={title} title={title} weather={value} unit={unit} />
           ))}
         </div>
+        <DailyPanel weather={weather} />
       </div>
 
       <HourlyPanel weather={weather} />

@@ -1,6 +1,7 @@
 import { getDayName, getHourLabel, isCurrentHour } from '../../utils/helpers.ts'
 import { useHourlyWeather } from '../../utils/hooks/useHourlyWeather.ts'
 import type { WeatherResponse } from '../../utils/types.ts'
+import { getWeatherIcon } from '../../utils/weatherIcons.ts'
 import Button from '../Button.tsx'
 
 const HourlyPanel = ({ weather }: { weather: WeatherResponse }) => {
@@ -48,17 +49,20 @@ const HourlyPanel = ({ weather }: { weather: WeatherResponse }) => {
           )}
         </div>
       </div>
-      <div ref={listRef} className=" relative flex flex-col gap-4 max-h-150 overflow-y-auto">
+      <div ref={listRef} className=" relative flex flex-col  gap-4 max-h-150 overflow-y-auto">
         {dayHours.map((item) => {
           const isCurrent = isCurrentHour(item.time, weather.current.time)
+          const icon = getWeatherIcon(item.weather_code, item.is_day)
+
           return (
             <div
               key={item.time}
               ref={isCurrent ? currentRef : null}
-              className="hourly-row justify-between"
+              className="hourly-row justify-between items-center"
             >
-              <span className="body-medium">{getHourLabel(item.time)}</span>{' '}
-              <span className="caption">
+              <span className="body-medium w-13.75">{getHourLabel(item.time)}</span>
+              <img src={icon.icon} alt={icon.label} className="w-8 h-8" />
+              <span className="caption w-10">
                 {item.temperature}
                 {unit}
               </span>
